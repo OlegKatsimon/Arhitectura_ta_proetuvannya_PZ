@@ -1,0 +1,37 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+class Report {
+public:
+    Report(const std::string& title, const std::string& content)
+        : title(title), content(content) {}
+
+    std::string generateReport() const {
+        return "Report Title: " + title + "\nContent: " + content;
+    }
+
+    void saveToFile(const std::string& filename) const {
+        std::ofstream file("C:\test\report.txt");
+        if (file.is_open()) {
+            file << generateReport();
+            file.close();
+        }
+    }
+
+    void sendViaEmail(const std::string& emailAddress) const {
+        std::cout << "Sending report to " << emailAddress << std::endl;
+        // Логіка надсилання електронної пошти
+    }
+
+private:
+    std::string title;
+    std::string content;
+};
+
+int main() {
+    Report report("Monthly Report", "This is the content of the report.");
+    report.saveToFile("report.txt");
+    report.sendViaEmail("example@example.com");
+    return 0;
+}
