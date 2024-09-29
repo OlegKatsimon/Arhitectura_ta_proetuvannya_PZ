@@ -1,27 +1,27 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+using namespace std;
 
 class Report {
 public:
-    Report(const std::string& title, const std::string& content)
+    Report(const string& title, const string& content)
         : title(title), content(content) {}
 
-    std::string generateReport() const {
+    string generateReport() const {
         return "Report Title: " + title + "\nContent: " + content;
     }
 
-    void saveToFile(const std::string& filename) const {
-        std::ofstream file("C:\test\report.txt");
+    void saveToFile(const string& filename) const {
+        ofstream file("C:\test\report.txt");
         if (file.is_open()) {
             file << generateReport();
             file.close();
         }
     }
 
-    void sendViaEmail(const std::string& emailAddress) const {
-        std::cout << "Sending report to " << emailAddress << std::endl;
-        // Логіка надсилання електронної пошти
+    void sendViaEmail(const string& emailAddress) const {
+        cout << "Sending report to " << emailAddress << endl;
     }
 
 private:
@@ -32,6 +32,6 @@ private:
 int main() {
     Report report("Monthly Report", "This is the content of the report.");
     report.saveToFile("report.txt");
-    report.sendViaEmail("example@example.com");
+    report.sendViaEmail("oleg.katsimon@henkel.com");
     return 0;
 }
