@@ -1,0 +1,24 @@
+interface Database {
+    save(user: User): void;
+}
+
+class User {
+    constructor(private database: Database) { }
+
+    // Цей код не залежить від конкретної реалізації Database
+    save() {
+        this.database.save(this);
+    }
+}
+
+class MySQLDatabase implements Database {
+    save(user: User) {
+        // Зберігає користувача в MySQL
+    }
+}
+
+class MongoDBDatabase implements Database {
+    save(user: User) {
+        // Зберігає користувача в MongoDB
+    }
+}
