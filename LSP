@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+#include <memory>
+using namespace std;
+
+// Базовий клас для птахів
+class Bird {
+public:
+    virtual void makeSound() const = 0; // Чисто віртуальний метод
+};
+
+// Інтерфейс для летючих птахів
+class IFlyingBird {
+public:
+    virtual void fly() const = 0; // Чисто віртуальний метод
+};
+
+// Клас для горобця
+class Sparrow : public Bird, public IFlyingBird {
+public:
+    void makeSound() const override {
+        cout << "Sparrow chirping!" << endl;
+    }
+
+    void fly() const override {
+        cout << "Sparrow flying!" << endl;
+    }
+};
+
+// Клас для пінгвіна
+class Penguin : public Bird {
+public:
+    void makeSound() const override {
+        cout << "Penguin squawking!" << endl;
+    }
+};
+
+// Функція, яка дозволяє летючим птахам літати
+void letBirdFly(const IFlyingBird& bird) {
+    bird.fly();
+}
+
+int main() {
+    Sparrow sparrow;
+    Penguin penguin;
+
+    sparrow.makeSound(); // Правильно
+    // penguin.makeSound(); // Теж правильно, але для пінгвіна немає методу fly()
+
+    letBirdFly(sparrow); // Правильно
+    // letBirdFly(penguin); // Цей виклик не можливий, що коректно
+
+    return 0;
+}
