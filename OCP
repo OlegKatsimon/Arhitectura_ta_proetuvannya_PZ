@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <memory>
+
+// Абстрактний клас для фігур
+class Shape {
+public:
+    virtual double area() const = 0; // Чисто віртуальна функція
+    virtual ~Shape() {}
+};
+
+// Клас для кола
+class Circle : public Shape {
+public:
+    Circle(double radius) : radius(radius) {}
+    double area() const override {
+        return 3.14159 * radius * radius;
+    }
+private:
+    double radius;
+};
+
+// Клас для квадрата
+class Square : public Shape {
+public:
+    Square(double side) : side(side) {}
+    double area() const override {
+        return side * side;
+    }
+private:
+    double side;
+};
+
+// Клас для обчислення площі (не потрібно змінювати)
+class AreaCalculator {
+public:
+    double calculateArea(const Shape& shape) {
+        return shape.area();
+    }
+};
+
+int main() {
+    std::vector<std::unique_ptr<Shape>> shapes;
+    shapes.push_back(std::make_unique<Circle>(5));
+    shapes.push_back(std::make_unique<Square>(4));
+
+    AreaCalculator calculator;
+    for (const auto& shape : shapes) {
+        std::cout << "Area: " << calculator.calculateArea(*shape) << std::endl;
+    }
+    
+    return 0;
+}
