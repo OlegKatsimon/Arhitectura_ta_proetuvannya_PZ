@@ -1,0 +1,35 @@
+interface SoundMaker {
+  makeSound(): string;
+}
+
+interface Eater {
+  eat(): void;
+}
+
+interface Flyer {
+  fly(): void;
+}
+
+class Dog implements SoundMaker, Eater {
+  makeSound(): string {
+    return "Гав!";
+  }
+
+  eat(): void {
+    console.log("Їсть кісточку");
+  }
+}
+
+class Bird implements SoundMaker, Eater, Flyer {
+  makeSound(): string {
+    return "Чірік!";
+  }
+
+  eat(): void {
+    console.log("Їсть зерно");
+  }
+
+  fly(): void {
+    console.log("Летить!");
+  }
+}
