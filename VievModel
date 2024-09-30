@@ -1,0 +1,25 @@
+// CalculatorViewModel.h
+#ifndef CALCULATORVIEWMODEL_H
+#define CALCULATORVIEWMODEL_H
+
+#include "CalculatorModel.h"
+#include <iostream>
+
+class CalculatorViewModel {
+public:
+    CalculatorViewModel() : model(new CalculatorModel()) {}
+
+    void performAddition(double a, double b) {
+        double result = model->add(a, b);
+        displayResult(result);
+    }
+
+private:
+    void displayResult(double result) {
+        std::cout << "Результат: " << result << std::endl;
+    }
+
+    CalculatorModel* model;
+};
+
+#endif // CALCULATORVIEWMODEL_H
