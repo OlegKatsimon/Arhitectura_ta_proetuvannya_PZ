@@ -1,0 +1,61 @@
+#include <iostream>
+
+class Beverage {
+public:
+    // Шаблонний метод
+    void prepare() {
+        boilWater();
+        brew();
+        pourInCup();
+        addCondiments();
+    }
+
+protected:
+    void boilWater() {
+        std::cout << "Boiling water" << std::endl;
+    }
+
+    void pourInCup() {
+        std::cout << "Pouring in cup" << std::endl;
+    }
+
+    // Ці методи повинні бути реалізовані в підкласах
+    virtual void brew() = 0; 
+    virtual void addCondiments() = 0; 
+};
+
+class Tea : public Beverage {
+protected:
+    void brew() override {
+        std::cout << "Steeping the tea" << std::endl;
+    }
+
+    void addCondiments() override {
+        std::cout << "Adding lemon" << std::endl;
+    }
+};
+
+class Coffee : public Beverage {
+protected:
+    void brew() override {
+        std::cout << "Dripping coffee through filter" << std::endl;
+    }
+
+    void addCondiments() override {
+        std::cout << "Adding sugar and milk" << std::endl;
+    }
+};
+
+int main() {
+    Beverage* tea = new Tea();
+    tea->prepare();
+    std::cout << std::endl;
+
+    Beverage* coffee = new Coffee();
+    coffee->prepare();
+
+    delete tea;
+    delete coffee;
+
+    return 0;
+}
