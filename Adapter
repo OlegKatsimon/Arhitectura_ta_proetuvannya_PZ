@@ -1,0 +1,38 @@
+#include <iostream>
+
+// Цільовий інтерфейс
+class Target {
+public:
+    virtual void request() const {
+        std::cout << "Цільовий запит" << std::endl;
+    }
+};
+
+// Несумісний клас
+class Adaptee {
+public:
+    void specificRequest() const {
+        std::cout << "Специфічний запит" << std::endl;
+    }
+};
+
+// Адаптер
+class Adapter : public Target {
+private:
+    Adaptee* adaptee;
+public:
+    Adapter(Adaptee* a) : adaptee(a) {}
+
+    void request() const override {
+        adaptee->specificRequest();  // Викликаємо специфічний запит
+    }
+};
+
+int main() {
+    Adaptee adaptee;
+    Adapter adapter(&adaptee);
+    
+    adapter.request();  // Виведе: Специфічний запит
+
+    return 0;
+}
