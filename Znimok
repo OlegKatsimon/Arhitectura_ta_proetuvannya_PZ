@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+// Знімок
+class Memento {
+public:
+    explicit Memento(const std::string& state) : state_(state) {}
+    std::string getState() const { return state_; }
+
+private:
+    std::string state_;
+};
+
+// Творець
+class Originator {
+public:
+    void setState(const std::string& state) {
+        state_ = state;
+        std::cout << "Стан встановлено: " << state_ << std::endl;
+    }
+
+    Memento createMemento() const {
+        return Memento(state_);
+    }
+
+    void restoreFromMemento(const Memento& memento) {
+        state_ = memento.getState();
+        std::cout << "Стан відновлено: " << state_ << std::endl;
+    }
+
+private:
+    std::string state_;
+};
+
+// Доглядач
+class Caretaker {
+public:
+    void saveState(Originator& originator) {
+        mementos_.push_back(originator.createMemento());
+    }
+
+    void restoreState(Originator& originator, int index) {
+        if (index < mementos_.size()) {
+            originator.restoreFromMemento(mementos_[index]);
+        } else {
+            std::cout << "Невірний індекс" << std::endl;
+        }
+    }
+
+private:
+    std::vector<Memento> mementos_;
+};
+
+int main() {
+    Originator originator;
+    Caretaker caretaker;
+
+    originator.setState("Стан 1");
+    caretaker.saveState(originator);
+
+    originator.setState("Стан 2");
+    caretaker.saveState(originator);
+
+    originator.setState("Стан 3");
+
+    caretaker.restoreState(originator, 1); // Відновлюємо "Стан 2"
+    caretaker.restoreState(originator, 0); // Відновлюємо "Стан 1"
+
+    return 0;
+}
