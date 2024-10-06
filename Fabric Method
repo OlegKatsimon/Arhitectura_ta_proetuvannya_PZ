@@ -1,0 +1,57 @@
+#include <iostream>
+#include <memory>
+
+// Продукт
+class Product {
+public:
+    virtual std::string operation() const = 0;
+};
+
+class ConcreteProductA : public Product {
+public:
+    std::string operation() const override {
+        return "Результат A";
+    }
+};
+
+class ConcreteProductB : public Product {
+public:
+    std::string operation() const override {
+        return "Результат B";
+    }
+};
+
+// Фабрика
+class Creator {
+public:
+    virtual std::unique_ptr<Product> factoryMethod() const = 0;
+
+    void someOperation() const {
+        auto product = factoryMethod();
+        std::cout << "Creator: Творю " << product->operation() << std::endl;
+    }
+};
+
+class CreatorA : public Creator {
+public:
+    std::unique_ptr<Product> factoryMethod() const override {
+        return std::make_unique<ConcreteProductA>();
+    }
+};
+
+class CreatorB : public Creator {
+public:
+    std::unique_ptr<Product> factoryMethod() const override {
+        return std::make_unique<ConcreteProductB>();
+    }
+};
+
+int main() {
+    CreatorA creatorA;
+    creatorA.someOperation();  // Виведе: Creator: Творю Результат A
+
+    CreatorB creatorB;
+    creatorB.someOperation();  // Виведе: Creator: Творю Результат B
+
+    return 0;
+}
